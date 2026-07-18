@@ -91,12 +91,3 @@ bool Server::initialize()
 
     return true;
 }
-
-int main()
-{
-    Server app(8000);
-
-    app.start();
-
-    return 0;
-}
