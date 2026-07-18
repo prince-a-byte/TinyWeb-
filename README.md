@@ -1,195 +1,312 @@
-# TinyWeb++
+# 🚀 TinyWeb++
 
-A lightweight HTTP web framework built completely from scratch in modern C++.
+> A lightweight HTTP web framework built from scratch in Modern C++.
 
-TinyWeb++ is an educational project focused on understanding how real backend frameworks work internally. Instead of hiding networking behind libraries, TinyWeb++ implements the HTTP server from the socket level upward.
+TinyWeb++ is an educational web framework that demonstrates how real backend frameworks like **Express**, **Flask**, and **ASP.NET Core** work internally.
 
-The goal is to learn the architecture behind frameworks like Express, Flask, Spring Boot, and ASP.NET by building each component step by step.
-
----
-
-## Features
-
-### Server
-
-* TCP socket creation
-* Socket binding
-* Listening for incoming connections
-* Client acceptance loop
-* Error handling
-* Object-oriented `Server` class
-
-### Request
-
-* Reads HTTP requests from a client socket
-* Parses the HTTP request line
-* Extracts:
-
-  * HTTP Method
-  * Request Path
-  * HTTP Version
-* Stores request headers (structure ready)
-* Stores request body (structure ready)
-
-### Architecture
-
-```
-Browser
-    │
-    ▼
-TCP Connection
-    │
-    ▼
-Server
-    │
-    ▼
-Request
-    │
-    ▼
-method
-path
-version
-```
+Instead of hiding networking behind libraries, TinyWeb++ builds every layer step by step—from TCP sockets to HTTP parsing, routing, middleware, and beyond.
 
 ---
 
-## Project Structure
+# ✨ Features
+
+## ✅ Implemented
+
+- TCP Socket Server
+- HTTP Request Parsing
+- HTTP Response Generation
+- Automatic HTTP Headers
+- Object-Oriented Design
+- Clean Separation of Responsibilities
+
+---
+
+# 📂 Project Structure
 
 ```
 TinyWeb++
 │
 ├── include/
 │   ├── server.h
-│   └── request.h
+│   ├── request.h
+│   └── response.h
 │
 ├── src/
+│   ├── main.cpp
 │   ├── server.cpp
 │   ├── request.cpp
-│   └── main.cpp
+│   └── response.cpp
 │
-├── README.md
-└── LICENSE
+├── CMakeLists.txt
+└── README.md
 ```
 
 ---
 
-## Current Capabilities
+# 🏗 Architecture
 
-* Accept TCP connections
-* Receive HTTP requests
-* Parse HTTP request line
-* Extract method, path, and version
-* Modular object-oriented architecture
-* Clean separation of responsibilities
+```
+Browser
+    │
+    ▼
+ TCP Connection
+    │
+    ▼
++-----------+
+|  Server   |
++-----------+
+    │
+    ▼
++-----------+
+|  Request  |
++-----------+
+    │
+    ▼
+Application Logic
+    │
+    ▼
++-----------+
+| Response  |
++-----------+
+    │
+    ▼
+ HTTP Response
+    │
+    ▼
+Browser
+```
 
 ---
 
-## Example
+# 📖 Current Components
 
-Incoming request:
+## Server
 
-```http
-GET /about HTTP/1.1
-Host: localhost:8000
-User-Agent: Chrome
+Responsible for
+
+- Creating sockets
+- Binding sockets
+- Listening for connections
+- Accepting clients
+- Managing the request-response lifecycle
+
+---
+
+## Request
+
+Responsible for parsing incoming HTTP requests.
+
+Currently extracts
+
+- HTTP Method
+- Request Path
+- HTTP Version
+
+Example
+
+```
+GET / HTTP/1.1
 ```
 
-Parsed as:
+becomes
 
 ```cpp
-Request req(clientSocket);
-
-std::cout << req.method;   // GET
-std::cout << req.path;     // /about
-std::cout << req.version;  // HTTP/1.1
+request.method   // GET
+request.path     // /
+request.version  // HTTP/1.1
 ```
 
 ---
 
-## Design Philosophy
+## Response
 
-TinyWeb++ is built around the **Single Responsibility Principle**.
+Responsible for generating valid HTTP responses.
 
-Each class has one clear responsibility.
+Automatically adds
 
-| Class      | Responsibility                             |
-| ---------- | ------------------------------------------ |
-| `Server`   | Manage sockets and client connections      |
-| `Request`  | Parse incoming HTTP requests               |
-| `Response` | *(Coming Soon)* Generate HTTP responses    |
-| `Router`   | *(Coming Soon)* Route requests to handlers |
+- Content-Type
+- Content-Length
+- Connection
 
-This separation keeps the codebase modular, maintainable, and easy to extend.
+Example
 
----
+```cpp
+Response response(clientSocket);
 
-## Roadmap
+response.send("<h1>Hello TinyWeb++</h1>");
+```
 
-### Phase 1 – Core HTTP Server ✅
+Generated response
 
-* [x] Socket creation
-* [x] Bind
-* [x] Listen
-* [x] Accept clients
-* [x] Server class
+```
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 26
+Connection: close
 
-### Phase 2 – Request Parsing ✅
-
-* [x] Request class
-* [x] Parse request line
-* [x] Extract method
-* [x] Extract path
-* [x] Extract HTTP version
-
-### Phase 3 – Response System 🚧
-
-* [ ] Response class
-* [ ] HTTP response builder
-* [ ] Status codes
-* [ ] Content-Type support
-
-### Phase 4 – Router
-
-* [ ] Route registration
-* [ ] Static routes
-* [ ] Dynamic routes
-* [ ] Route parameters
-
-### Phase 5 – Middleware
-
-* [ ] Middleware pipeline
-* [ ] Logging
-* [ ] Authentication hooks
-
-### Phase 6 – Advanced Features
-
-* [ ] Static file serving
-* [ ] JSON responses
-* [ ] Thread pool
-* [ ] Keep-Alive connections
-* [ ] HTTP POST support
+<h1>Hello TinyWeb++</h1>
+```
 
 ---
 
-## Why TinyWeb++?
+# 🚀 Building
 
-Most tutorials teach developers how to *use* web frameworks.
+Compile
 
-TinyWeb++ is about learning how to **build** one.
+```bash
+g++ src/*.cpp -Iinclude -std=c++17 -o TinyWeb
+```
 
-By implementing each layer manually—from sockets to routing—you gain a deeper understanding of networking, HTTP, software architecture, and modern C++ design.
+Run
+
+```bash
+./TinyWeb
+```
+
+Open your browser
+
+```
+http://localhost:8080
+```
+
+*(Replace `8080` with the port configured in `main.cpp` if different.)*
 
 ---
 
-## Tech Stack
+# 🎯 Goals
 
-* C++17
-* POSIX Sockets
-* STL
-* Object-Oriented Design
+TinyWeb++ is being developed incrementally.
+
+Each feature is built from scratch to understand how web frameworks work internally.
 
 ---
 
-## License
+# 🛣 Roadmap
+
+## ✅ Phase 1 — HTTP Core
+
+- [x] TCP Socket Server
+- [x] Server Class
+- [x] Request Class
+- [x] Response Class
+- [x] HTTP Request Parsing
+- [x] HTTP Response Generation
+
+---
+
+## 🚧 Phase 2 — Routing
+
+- [ ] Router
+- [ ] GET Routes
+- [ ] POST Routes
+- [ ] Route Parameters
+- [ ] Query Parameters
+
+Example
+
+```cpp
+app.get("/", home);
+
+app.get("/about", about);
+
+app.post("/login", login);
+```
+
+---
+
+## 🚧 Phase 3 — Middleware
+
+- [ ] Middleware Pipeline
+- [ ] Logging
+- [ ] Authentication
+- [ ] Error Handling
+
+---
+
+## 🚧 Phase 4 — Static Files
+
+- [ ] HTML
+- [ ] CSS
+- [ ] JavaScript
+- [ ] Images
+
+---
+
+## 🚧 Phase 5 — JSON
+
+- [ ] JSON Responses
+- [ ] JSON Parsing
+- [ ] REST APIs
+
+---
+
+## 🚧 Phase 6 — Performance
+
+- [ ] Thread Pool
+- [ ] Keep-Alive Connections
+- [ ] Connection Manager
+- [ ] HTTP/1.1 Improvements
+
+---
+
+# 💡 Design Principles
+
+TinyWeb++ follows several software engineering principles.
+
+- Single Responsibility Principle
+- Separation of Concerns
+- Object-Oriented Design
+- Readable Modern C++
+- Educational First
+
+Each class is responsible for exactly one part of the HTTP lifecycle.
+
+---
+
+# 📚 Learning Objectives
+
+This project is designed to help understand
+
+- TCP/IP Networking
+- Socket Programming
+- HTTP Protocol
+- Request Parsing
+- Response Generation
+- Backend Framework Architecture
+- Modern C++
+- Software Design Principles
+
+---
+
+# 📈 Project Status
+
+| Component | Status |
+|-----------|--------|
+| TCP Server | ✅ Complete |
+| Request Parser | ✅ Complete |
+| Response Generator | ✅ Complete |
+| Router | 🚧 In Progress |
+| Middleware | ⏳ Planned |
+| Static Files | ⏳ Planned |
+| JSON | ⏳ Planned |
+| Thread Pool | ⏳ Planned |
+
+---
+
+# 🤝 Contributing
+
+Contributions, suggestions, and discussions are welcome.
+
+Feel free to open an issue or submit a pull request.
+
+---
+
+# 📜 License
 
 This project is licensed under the MIT License.
+
+---
+
+# ⭐ Acknowledgements
+
+TinyWeb++ is built from scratch as an educational project to explore the inner workings of modern web frameworks and gain a deeper understanding of backend development.

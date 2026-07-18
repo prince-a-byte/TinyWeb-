@@ -5,6 +5,10 @@
 #include <sstream>
 
 
+void Request::parseHeaders() {}
+
+void Request::parseBody() {}
+
 void Request::parseRequest(int clientSocket)
 {
     constexpr std::size_t BUFFER_SIZE = 4096;

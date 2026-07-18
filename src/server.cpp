@@ -1,4 +1,6 @@
 #include "server.h"
+#include "request.h"
+#include "response.h"
 
 bool Server::createSocket()
 {
@@ -51,9 +53,17 @@ void Server::acceptClient()
             break;
         }
 
-        else{
-            std::cout<<"Client Connected Successfully!\n";
-        }
+        Request req(clientSocket);
+
+        std::cout<<"Method: "<<req.method<<'\n';
+        std::cout<<"Path: "<<req.path<<'\n';
+        std::cout<<"Version: "<<req.version<<'\n';
+
+        Response res(clientSocket);
+
+        res.send("<h1>Hello From the tinyWeb- FrameWork</h1>");
+
+        close(clientSocket);
 
     }
 

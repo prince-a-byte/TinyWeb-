@@ -1,0 +1,23 @@
+# Build
+build/
+cmake-build-*/
+TinyWeb
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Compile Commands
+compile_commands.json
+
+# Editors
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
