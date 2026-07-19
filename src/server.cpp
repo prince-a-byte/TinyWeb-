@@ -39,6 +39,8 @@ bool Server::listenSocket()
         return false;
     }
 
+    std::cout<<"Server Started Successfully on PORT: "<<port<<'\n';
+
     return true;
 }
 
