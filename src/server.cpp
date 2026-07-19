@@ -61,7 +61,7 @@ void Server::acceptClient()
 
         Response res(clientSocket);
 
-        res.send("<h1>Hello From the tinyWeb- FrameWork</h1>");
+        router.route(req,res);
 
         close(clientSocket);
 
@@ -90,4 +90,9 @@ bool Server::initialize()
     if(!listenSocket()) return false;
 
     return true;
+}
+
+void Server::get(const std::string& url, std::function<void(Request& req, Response& res)> handler)
+{
+    router.get(url,handler);
 }
