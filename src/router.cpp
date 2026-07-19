@@ -14,6 +14,6 @@ void Router::route(Request& req, Response& res)
         it->second (req, res);
     }
     else{
-        res.send("<h1>Error 404 Not Found</h1>");
+        res.status(Status::NOT_FOUND).send("<h1>404 Not Found</h1>");
     }
 }

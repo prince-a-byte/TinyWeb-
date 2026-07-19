@@ -3,15 +3,21 @@
 #include <sys/socket.h>
 
 Response::Response(int clientSocket)
+    : clientSocket(clientSocket),
+      status_(Status::OK)
 {
-    this->clientSocket = clientSocket;
-    status = "200 OK";
     headers["Content-Type"] = "text/html";
+}
+
+Response& Response::status(const HttpStatus& status)
+{
+    status_ = status;
+    return *this;
 }
 
 void Response::send(const std::string& body)
 {
-    std::string response = "HTTP/1.1 "+status+"\r\n";
+    std::string response = "HTTP/1.1 "+std::to_string(status_.code)+" "+ status_.message+"\r\n";
     headers["Content-Length"] = std::to_string(body.size());
     headers["Connection"] = "close";
 
@@ -33,7 +39,8 @@ void Response::send(const std::string& body)
 
 }
 
-void Response::setHeader(const std::string& key, const std::string& value)
+Response& Response::setHeader(const std::string& key, const std::string& value)
 {
     headers[key] = value;
+    return *this;
 }
